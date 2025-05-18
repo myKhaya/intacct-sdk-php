@@ -221,7 +221,10 @@ class RequestHandler
         };
         
         //setup the handler
-        if ($this->getClientConfig()->getMockHandler() instanceof MockHandler) {
+        if (is_callable($this->getClientConfig()->getCustomHandler())) {
+            $factory = $this->getClientConfig()->getCustomHandler();
+            $handler = $factory();
+        } else if ($this->getClientConfig()->getMockHandler() instanceof MockHandler) {
             $handler = HandlerStack::create($this->getClientConfig()->getMockHandler());
         } else {
             $handler = HandlerStack::create();
