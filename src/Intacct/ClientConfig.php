@@ -18,6 +18,7 @@
 namespace Intacct;
 
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
 use Intacct\Credentials\CredentialsInterface;
 use Intacct\Logging\MessageFormatter;
 use Psr\Log\LoggerInterface;
@@ -347,6 +348,29 @@ class ClientConfig
     public function setMockHandler(MockHandler $mockHandler)
     {
         $this->mockHandler = $mockHandler;
+    }
+
+    /** @var Callable */
+    private $customHandler;
+
+    /**
+     * @return Callable
+     */
+    public function getCustomHandler()
+    {
+        return $this->customHandler;
+    }
+
+    /**
+     * @param Callable $customHandler that returns a new HandlerStack
+     */
+    public function setCustomHandlerFactory($customHandler)
+    {
+        if (!is_callable($customHandler)) {
+            throw new \InvalidArgumentException("Custom Handler must be a callable that returns a new HandlerStack");
+        }
+
+        $this->customHandler = $customHandler;
     }
 
     /**
