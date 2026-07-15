@@ -91,6 +91,9 @@ abstract class AbstractContact extends AbstractFunction
     protected $addressLine2;
 
     /** @var string */
+    protected $addressLine3;
+
+    /** @var string */
     protected $city;
 
     /** @var string */
@@ -552,6 +555,26 @@ abstract class AbstractContact extends AbstractFunction
     }
 
     /**
+     * Get address line 3
+     *
+     * @return string
+     */
+    public function getAddressLine3()
+    {
+        return $this->addressLine3;
+    }
+
+    /**
+     * Set address line 3
+     *
+     * @param string $addressLine3
+     */
+    public function setAddressLine3($addressLine3)
+    {
+        $this->addressLine3 = $addressLine3;
+    }
+
+    /**
      * Get city
      *
      * @return string
@@ -654,6 +677,7 @@ abstract class AbstractContact extends AbstractFunction
     {
         if ($this->getAddressLine1()
             || $this->getAddressLine2()
+            || $this->getAddressLine3()
             || $this->getCity()
             || $this->getStateProvince()
             || $this->getZipPostalCode()
@@ -663,6 +687,7 @@ abstract class AbstractContact extends AbstractFunction
 
             $xml->writeElement('ADDRESS1', $this->getAddressLine1());
             $xml->writeElement('ADDRESS2', $this->getAddressLine2());
+            $xml->writeElement('ADDRESS3', $this->getAddressLine3());
             $xml->writeElement('CITY', $this->getCity());
             $xml->writeElement('STATE', $this->getStateProvince());
             $xml->writeElement('ZIP', $this->getZipPostalCode());
